@@ -45,6 +45,7 @@ class DNA(d: String) {
   }
 
   def replace(tpl: String, e: String) = {
+    val r = ""
     /*    proc replace (tpl : Template,e : Environment) =
 121 let r : DNA ← ε
 122 foreach t ∈ tpl
@@ -59,30 +60,20 @@ class DNA(d: String) {
   }
 
   def protect(l: Int, d: String): String = {
-    /*   function protect (l : N, d : DNA) : DNA =
-132 if l = 0
-133 then return d
-134 else return protect (l − 1, quote (d))
-135 end if
-136 function quote (d : DNA) : DNA =
-137 case d starts with
-138 I ⇒ return C C quote (d[1 . .])
-139 C ⇒ return F C quote (d[1 . .])
-140 F ⇒ return P C quote (d[1 . .])
-141 P ⇒ return ‘IC’  quote (d[1 . .])
-142 anything else ⇒ return ε
-143 end case*/
-    return ""
+    l match {
+      case 0 => d
+      case _ => protect(l-1,quote(d))
+    }
   }
-
-  def asnat(n: Int): String = {
-    /*    function asnat (n : N) : DNA =
-145 case n is
-146 0 ⇒ return ‘P’
-147 positive even ⇒ return I C asnat bn/2c
-148 positive odd ⇒ return C C asnat bn/2c
-149 end case*/
-    return ""
+  
+  def quote (d : String) : String = {
+    d match {
+      case "I" =>  "C" + quote(d.drop(1))
+      case "C" =>  "F" + quote(d.drop(1))
+      case "F" =>  "P" + quote(d.drop(1))
+      case "P" =>  "IC" + quote(d.drop(1))
+      case _ => ""
+    }
   }
 
   def finish(): Int = {
@@ -135,6 +126,14 @@ class DNA(d: String) {
       case "C" =>
         val n = nat(); 2 * n + 1
       case _ => finish()
+    }
+  }
+
+  def asnat(n: Int): String = {
+    n match {
+      case 0 => "P"
+      case x if x % 2 == 0 => "I" + asnat(n / 2)
+      case x if x % 2 == 1 => "C" + asnat(n / 2)
     }
   }
 

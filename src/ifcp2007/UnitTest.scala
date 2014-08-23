@@ -29,4 +29,23 @@ class UnitTest {
     val dna = new DNA("IIPIPICPIICICIIF")
     assertEquals("IIPIPICPIICICIIF  -> (!/2/)P", "(!/2/)P", dna.pattern())
   }
+
+  @Test def testTranslate1() {
+    val dna = new DNA("IIPIPICPIICICIIFICCIFPPIICCFPC")
+    dna.translate()
+    assertEquals("IIPIPICPIICICIIFICCIFPPIICCFPC -> PICFC", "PICFC", dna.dna)
+  }
+
+  @Test def testTranslate2() {
+    val dna = new DNA("IIPIPICPIICICIIFICCIFCCCPPIICCFPC")
+    dna.translate()
+    assertEquals("IIPIPICPIICICIIFICCIFCCCPPIICCFPC -> PIICCFCFFPC", "PIICCFCFFPC", dna.dna)
+  }
+  
+  @Test def testTranslate3() {
+    val dna = new DNA("IIPIPIICPIICIICCIICFCFC")
+    dna.translate()
+    assertEquals("IIPIPIICPIICIICCIICFCFC -> I", "I", dna.dna)
+  }  
+
 }
